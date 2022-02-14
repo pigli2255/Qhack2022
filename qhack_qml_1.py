@@ -47,7 +47,8 @@ def generating_fourier_state(n_qubits, m):
         """
 
         probs = circuit(angles)
-        goal = [0,0,0,0]
+        n_states = 2 ** n_qubits
+        goal = [0 for i in range(n_states)]
         goal[m] = 1
 
         loss = 0
