@@ -83,7 +83,11 @@ def create_H1(ground_state, beta, H):
 
     # QHACK #
     #### Problem ####
-    h_matrix = H.matrix
+
+    h_matrix = qml.utils.sparse_hamiltonian(H).real
+    h_matrix = h_matrix.toarray()
+    
+
     #### Problem ####
     
     shift = beta * np.outer(np.conj(ground_state), ground_state)
@@ -93,8 +97,9 @@ def create_H1(ground_state, beta, H):
     #H2 = qml.Hamiltonian((1,), (obs,))
 
     h1_matrix = h_matrix + shift
+    
 
-    return qml.Hermitian(h1_matrix)
+    return qml.Hermitian(h1_matrix, wires=H.wires)
 
     # QHACK #
 
