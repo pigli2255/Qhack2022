@@ -21,7 +21,7 @@ def oracle_matrix(indices):
     # QHACK #
     oracle = np.identity(2**4)
     for index in indices:
-        oracle[index]=-1
+        oracle[index, index]=-1
 
 
     # QHACK #
