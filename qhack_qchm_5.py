@@ -90,7 +90,7 @@ def create_H1(ground_state, beta, H):
 
     #### Problem ####
     
-    shift = beta * np.outer(np.conj(ground_state), ground_state)
+    shift = beta * np.outer(ground_state, np.conj(ground_state))
 
     #obs_matrix = shift
     #obs = qml.Hermitian(obs_matrix, wires=H_in.wires)
