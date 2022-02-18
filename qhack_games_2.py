@@ -18,13 +18,10 @@ def prepare_entangled(alpha, beta):
 
     # QHACK #
 
-    H_entangler = np.array([[alpha, beta], [beta, -alpha]])
+    H_entangler = 1/np.sqrt(alpha+beta)*np.array([[alpha, beta], [beta, -alpha]])
 
-    def circuit():
-        qml.QubitUnitary(H_entangler, wires=[0])
-        qml.CNOT(wires=[0,1])
-
-    return circuit
+    qml.QubitUnitary(H_entangler, wires=[0])
+    qml.CNOT(wires=[0,1])
 
     # QHACK #
 
@@ -47,35 +44,20 @@ def chsh_circuit(theta_A0, theta_A1, theta_B0, theta_B1, x, y, alpha, beta):
         - (np.tensor): Probabilities of each basis state
     """
 
-    prepare_entangled(alpha, beta)
-
 
     # QHACK #
 
-    def new_basis(theta):
-        return np.array([[np.cos(theta), -np.sin(theta)],[np.sin(theta), np.cos(theta)]])
+   prepare_entangled(alpha, beta)
 
-    if x==0:
-        qml.QubitUnitary(new_basis(theta_A0), wires=0).adjoint()
-    elif x==1:
-        qml.QubitUnitary(new_basis(theta_A1), wires=0).adjoint()
+    if x == 0:
+        qml.RY(theta_A0, wires=0)
+    elif x == 1:
+        qml.RY(theta_A1, wires=0)
 
     if y == 0:
-        qml.QubitUnitary(new_basis(theta_B0), wires=1).adjoint()
+        qml.RY(theta_B0, wires=1)
     elif y == 1:
-        qml.QubitUnitary(new_basis(theta_B1), wires=1).adjoint()
-
-    # if x == 0:
-    #     qml.RY(2*theta_A0, wires=0).adjoint()
-    # elif x == 1:
-    #     qml.RY(2*theta_A1, wires=0).adjoint()
-    #
-    # if y == 0:
-    #     qml.RY(2*theta_B0, wires=1).adjoint()
-    # elif y == 1:
-    #     qml.RY(2*theta_B1, wires=1).adjoint()
-
-
+        qml.RY(theta_B1, wires=1)
 
 
     # QHACK #
@@ -101,13 +83,14 @@ def winning_prob(params, alpha, beta):
     for x in range(2):
         for y in range(2):
             probs = chsh_circuit(*params, x, y, alpha, beta)
-
             if x * y == 0:
                 probs_correct += probs[0]+probs[3]
 
             elif x*y ==1:
                 probs_correct += probs[1]+probs[2]
 
+            else:
+                raise ValueError
 
     return probs_correct/4
 
@@ -132,8 +115,8 @@ def optimize(alpha, beta):
 
     # Initialize parameters, choose an optimization method and number of steps
     init_params = np.pi*np.random.rand(4, requires_grad=True)
-    opt =qml.AdamOptimizer(0.5)
-    steps = 50
+    opt =qml.AdamOptimizer(0.1)
+    steps = 200
 
 
 
@@ -148,8 +131,8 @@ def optimize(alpha, beta):
 
         params = opt.step(cost, params)
         params = np.clip(params, -2*np.pi, 2*np.pi)
-        if i%50 == 0:
-            print("step=", i, ", cost=", cost(params))
+        #if i%50 == 0:
+        #    print("step=", i, ", cost=", cost(params))
 
         # QHACK #
 
