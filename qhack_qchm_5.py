@@ -17,14 +17,17 @@ def ground_state_VQE(H):
 
     # QHACK #
     wires = len(H.wires)
-    print(wires)
+   #print(wires)
     dev = qml.device("default.qubit", wires=wires)
     hf_state = np.array([1, 1] + [0]*(wires-2))
 
 
     def circuit(param):
         qml.BasisState(hf_state, wires=range(wires))
-        qml.DoubleExcitation(param, wires=range(wires))
+        qml.SingleExcitation(param[0], wires=range(2))
+        qml.SingleExcitation(param[1], wires=range(1,3))
+        qml.SingleExcitation(param[2], wires=range(2,4))
+        qml.DoubleExcitation(param[3], wires=range(wires))
 
     @qml.qnode(dev)
     def cost_fn(param):
@@ -37,33 +40,34 @@ def ground_state_VQE(H):
         return qml.state()
 
     # Optimization Routine
-    opt = qml.GradientDescentOptimizer(stepsize=0.4)
-    theta = np.array(0.0, requires_grad=True)
+    opt = qml.GradientDescentOptimizer(stepsize=0.1)
+    theta = np.random.randn(4, requires_grad=True)
 
     energy = [cost_fn(theta)]
 
     # store the values of the circuit parameter
     angle = [theta]
 
-    max_iterations = 100
+    max_iterations = 300
     conv_tol = 1e-06
 
     for n in range(max_iterations):
-        theta, prev_energy = opt.step_and_cost(cost_fn, theta)
+        theta = opt.step(cost_fn, theta)
+        theta = np.clip(theta, -2*np.pi, 2*np.pi)
 
         energy.append(cost_fn(theta))
         angle.append(theta)
 
-        conv = np.abs(energy[-1] - prev_energy)
+        #conv = np.abs(energy[-1] - prev_energy)
 
-        if n % 2 == 0:
+        if n % 50 == 0:
             print(f"Step = {n},  Energy = {energy[-1]:.8f} Ha")
+            print("theta:", theta)
+        #if conv <= conv_tol:
+        #    break
 
-        if conv <= conv_tol:
-            break
-
-    print("\n" f"Final value of the ground-state energy = {energy[-1]:.8f} Ha")
-    print("\n" f"Optimal value of the circuit parameter = {angle[-1]:.4f}")
+    #print("\n" f"Final value of the ground-state energy = {energy[-1]:.8f} Ha")
+    #print("\n" f"Optimal value of the circuit parameter = {angle[-1]:.4f}")
 
     return cost_fn(angle[-1]), state(angle[-1])
     # QHACK #
@@ -99,7 +103,7 @@ def create_H1(ground_state, beta, H):
     h1_matrix = h_matrix + shift
     
 
-    return qml.Hermitian(h1_matrix, wires=H.wires)
+    return h1_matrix
 
     # QHACK #
 
@@ -115,7 +119,10 @@ def excited_state_VQE(H1):
     """
 
     # QHACK #
-    return ground_state_VQE(H1)
+    coeffs, obs = qml.utils.decompose_hamiltonian(H)
+    H1 = qml.Hamiltonian(coeffs, obs)
+    en1, st1 = ground_state_VQE(H1)
+    return en1
     # QHACK #
 
 
