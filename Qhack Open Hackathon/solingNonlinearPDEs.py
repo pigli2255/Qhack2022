@@ -67,11 +67,17 @@ def residual(controlPoints):
     return f
 
 # cost function
-def cost(pred):   # Later we can add additional boundary loss here
-    return pred**2
+def cost(points):
+    x = points[0]
+    xBdr = points[1]
+    BdrValue = 0
+    residualLoss = residual(x)**2
+    boundaryLoss = (BdrValue - compute_output(model(xBdr)))**2
+    return residualLoss + boundaryLoss
 
 controlPoints = torch.rand(100, requires_grad=True)
-batches = torch.utils.data.DataLoader(controlPoints, batch_size=10, shuffle=True)
+controlPointsBdr = torch.tensor([-1,1]*50)
+batches = torch.utils.data.DataLoader(torch.stack((controlPoints, controlPointsBdr),dim=1), batch_size=10, shuffle=True)
 
 opt = torch.optim.Adam(model.parameters(), lr=1)
 
@@ -82,10 +88,9 @@ for i in range(steps):
     for batch in batches:
         #print(batch)
         loss = 0
+        opt.zero_grad()
         for x in batch:
-            opt.zero_grad()
-            pred = residual(x)
-            loss += cost(pred)
+            loss += cost(x)
         loss.backward(retain_graph=True)
         opt.step()
 
