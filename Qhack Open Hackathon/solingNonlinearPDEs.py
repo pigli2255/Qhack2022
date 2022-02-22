@@ -1,7 +1,7 @@
 import torch
 import pennylane as qml
 from pennylane import numpy as np
-# import matplotlib.pyplot as plt
+import matplotlib.pyplot as plt
 
 n_qubits = 6
 depth = 1
@@ -95,7 +95,7 @@ for i in range(steps):
         opt.step()
 
     print("step: ", i, "--> loss = ", loss)
-    print("Weights: ", model.state_dict())
+#    print("Weights: ", model.state_dict())
 
 # exact solution of the differential equation
 def exactSolution(x):
