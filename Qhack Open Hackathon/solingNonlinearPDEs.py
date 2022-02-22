@@ -97,3 +97,21 @@ for i in range(steps):
     print("step: ", i, "--> loss = ", loss)
     print("Weights: ", model.state_dict())
 
+# exact solution of the differential equation
+def exactSolution(x):
+    return 1/2*(x**2-1)
+
+
+# Create Plot
+numPlotPoints = 101
+
+plotPoints = np.linspace(-1, 1, numPlotPoints).reshape(numPlotPoints, 1)
+yExact = exactSolution(plotPoints)
+yModel = [compute_output(model(Point[0])).detach().numpy() for Point in torch.tensor(plotPoints)]
+
+plt.plot(plotPoints, yExact, label = "Exact Solution")
+plt.plot(plotPoints, yModel, label = "Model Solution")
+plt.xlabel("x", fontsize=14)
+plt.ylabel("u(x)", fontsize=14)
+plt.legend()
+plt.savefig("ModelFit.png")
