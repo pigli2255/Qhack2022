@@ -9,12 +9,14 @@ layers = 1
 
 dev = qml.device("default.qubit", wires = n_qubits)
 
+# Define Input Feature Map
 def TChebyshev(x):
     #print(2*2*torch.arccos(x))
     for layer in range(layers):
         for i in range(n_qubits):
             qml.RY(2*torch.arccos(x), wires=i)
 
+ # Define Variational quantum circuit
 def HardwareEffAnsatz(params):
     for _ in range(depth):
         for l in range(n_qubits):
@@ -26,16 +28,24 @@ def HardwareEffAnsatz(params):
         for l in range(1, n_qubits - 1, 2):
             qml.CNOT(wires=[l, l + 1])
 
+ # Combine QCircuits in qnode
 @qml.qnode(dev, interface="torch")
 def VQA_TC(inputs, params):
     TChebyshev(inputs)
     HardwareEffAnsatz(params)
     return [qml.expval(qml.PauliZ(i)) for i in range(n_qubits)]  # Use total magnetization as cost function
 
+# Define torch model
+weight_shapes = { 'params': (n_qubits, 1)}
+VQA_layer = qml.qnn.TorchLayer(VQA_TC, weight_shapes)
+model = torch.nn.Sequential(VQA_layer)
+
+# Compute outputs from measurements
 def output(x):
     mz = model(x)
     return torch.sum(mz)
 
+# Compute Residual (How much does solution differ from differential equation)
 def residual(controlPoints):
     """ Calculate the residium of the control points"""
     x = controlPoints
@@ -63,9 +73,7 @@ def cost(controlPoints):
     preds = torch.tensor([residual(x) for x in controlPoints], requires_grad=True)
     return torch.mean(preds**2)
 
-weight_shapes = { 'params': (n_qubits, 1)}
-VQA_layer = qml.qnn.TorchLayer(VQA_TC, weight_shapes)
-model = torch.nn.Sequential(VQA_layer)
+
 controlPoints = torch.rand(100, requires_grad=True)
 opt = torch.optim.Adam(model.parameters(), lr=10)
 steps = 10
