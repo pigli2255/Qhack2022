@@ -40,16 +40,11 @@ weight_shapes = { 'params': (n_qubits, 1)}
 VQA_layer = qml.qnn.TorchLayer(VQA_TC, weight_shapes)
 model = torch.nn.Sequential(VQA_layer)
 
-# Compute outputs from measurements
-def output(x):
-    mz = model(x)
-    return torch.sum(mz)
-
 # Compute Residual (How much does solution differ from differential equation)
 def residual(controlPoints):
     """ Calculate the residium of the control points"""
     x = controlPoints
-    u = output(x)
+    u = torch.sum(model(x))
     u_x = torch.autograd.grad(
         u, x,
         grad_outputs=torch.ones_like(u),
@@ -69,21 +64,26 @@ def residual(controlPoints):
     return f
 
 # cost function
-def cost(controlPoints):
-    preds = torch.tensor([residual(x) for x in controlPoints], requires_grad=True)
-    return torch.mean(preds**2)
-
+#def cost(controlPoint):
+#    preds = torch.tensor([residual(x) for x in controlPoints], requires_grad=True)
+#    return torch.mean(preds**2)
 
 controlPoints = torch.rand(100, requires_grad=True)
 opt = torch.optim.Adam(model.parameters(), lr=10)
 steps = 10
 model.train()
+cost = torch.mean
 
 for i in range(steps):
-    opt.zero_grad()
-    loss = cost(controlPoints)
-    if i % 5 == 0:
-        print("step:", i, "--> loss = ", loss)
-    loss.backward()
+
+    loss = 0
+    for x in controlPoints:
+        opt.zero_grad()
+        pred = residual(x)
+        loss += cost(pred**2)
+        loss.backward(retain_graph=True)
+
+    print("step: ", i, "--> loss = ", loss)
+    print("Weights: ", model.state_dict())
     opt.step()
 
