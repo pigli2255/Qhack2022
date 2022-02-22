@@ -75,13 +75,14 @@ def cost(points):
     boundaryLoss = (BdrValue - compute_output(model(xBdr)))**2
     return residualLoss + boundaryLoss
 
-controlPoints = torch.rand(100, requires_grad=True)
-controlPointsBdr = torch.tensor([-1,1]*50)
+controlPoints = torch.rand(200, requires_grad=True)
+controlPointsBdr = torch.tensor([-1,1]*100)
 batches = torch.utils.data.DataLoader(torch.stack((controlPoints, controlPointsBdr),dim=1), batch_size=10, shuffle=True)
 
-opt = torch.optim.Adam(model.parameters(), lr=1)
+learning_rate = 0.01
+opt = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
-steps = 3
+steps = 20
 model.train()
 
 for i in range(steps):
