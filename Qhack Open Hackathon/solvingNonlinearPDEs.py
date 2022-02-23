@@ -82,7 +82,7 @@ batches = torch.utils.data.DataLoader(torch.stack((controlPoints, controlPointsB
 learning_rate = 0.01
 opt = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
-steps = 20
+steps = 10
 model.train()
 
 for i in range(steps):
@@ -104,6 +104,7 @@ def exactSolution(x):
 
 
 # Create Plot
+model.eval()
 numPlotPoints = 101
 
 plotPoints = np.linspace(-1, 1, numPlotPoints).reshape(numPlotPoints, 1)
@@ -116,3 +117,5 @@ plt.xlabel("x", fontsize=14)
 plt.ylabel("u(x)", fontsize=14)
 plt.legend()
 plt.savefig("ModelFit.png")
+
+
