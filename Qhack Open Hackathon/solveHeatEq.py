@@ -7,6 +7,7 @@ import matplotlib.animation as animation
 from matplotlib.animation import FuncAnimation
 
 # definitions, init and boundaries
+
 plate_length = 32
 time_steps = 1000
 alpha = 2
@@ -54,5 +55,5 @@ def plotheatmap(u_k, k):
 def animate(k):
     plotheatmap(u[k], k)
 
-anim = animation.FuncAnimation(plt.figure(), animate, interval=1, frames=time_steps, repeat=False)
+anim = animation.FuncAnimation(plt.figure(), animate, interval=1, frames=time_steps,  repeat=False)
 anim.save("heat_equation_solution.gif")

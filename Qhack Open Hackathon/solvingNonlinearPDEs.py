@@ -77,12 +77,12 @@ def cost(points):
 
 controlPoints = torch.rand(200, requires_grad=True)
 controlPointsBdr = torch.tensor([-1,1]*100)
-batches = torch.utils.data.DataLoader(torch.stack((controlPoints, controlPointsBdr),dim=1), batch_size=10, shuffle=True)
+batches = torch.utils.data.DataLoader(torch.stack((controlPoints, controlPointsBdr),dim=1), batch_size=20, shuffle=True)
 
-learning_rate = 0.01
+learning_rate = 0.1
 opt = torch.optim.Adam(model.parameters(), lr=learning_rate)
 
-steps = 10
+steps = 20
 model.train()
 
 for i in range(steps):
@@ -96,8 +96,7 @@ for i in range(steps):
         opt.step()
 
     print("step: ", i, "--> loss = ", loss)
-#    print("Weights: ", model.state_dict())
-
+# print("Weights: ", model.state_dict())
 # exact solution of the differential equation
 def exactSolution(x):
     return 1/2*(x**2-1)
@@ -117,5 +116,3 @@ plt.xlabel("x", fontsize=14)
 plt.ylabel("u(x)", fontsize=14)
 plt.legend()
 plt.savefig("ModelFit.png")
-
-
