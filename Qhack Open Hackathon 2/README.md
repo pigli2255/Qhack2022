@@ -116,13 +116,16 @@ In this case Player 2 wins : )
 
 <table>
 <tr>
-    <td align="center"><a href="https://github.com/pigli2255"><img src="https://github.com/pigli2255.png" width="100px;" alt=""/><br /><sub><b>Josep Fargas</b></sub></a><br /><a href="https://github.com/physiopy/phys2bids/commits?author=viacovella" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/pigli2255"><img src="https://github.com/pigli2255.png" width="100px;" alt=""/><br /><sub><b>Pia</b></sub></a><br /><a href="https://github.com/physiopy/phys2bids/commits?author=viacovella" title="Code">💻</a></td>
 </tr>
 <tr>
-    <td align="center"><a href="https://github.com/markmi85"><img src="https://github.com/markmi85.png" width="100px;" alt=""/><br /><sub><b>Amrit Prasad Phuyal</b></sub></a><br /><a href="https://github.com/physiopy/phys2bids/commits?author=viacovella" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/markmi85"><img src="https://github.com/markmi85.png" width="100px;" alt=""/><br /><sub><b>Markus Mieh</b></sub></a><br /><a href="https://github.com/physiopy/phys2bids/commits?author=viacovella" title="Code">💻</a></td>
 </tr>
 <tr>
-    <td align="center"><a href="https://github.com/smitchaudhary"><img src="https://github.com/smitchaudhary.png" width="100px;" alt=""/><br /><sub><b>Chakhriya Chantharakhami</b></sub></a><br /><a href="https://github.com/physiopy/phys2bids/commits?author=viacovella" title="Code">💻</a></td>
+    <td align="center"><a href="https://github.com/smitchaudhary"><img src="https://github.com/smitchaudhary.png" width="100px;" alt=""/><br /><sub><b>Smit</b></sub></a><br /><a href="https://github.com/physiopy/phys2bids/commits?author=viacovella" title="Code">💻</a></td>
+</tr>
+<tr>
+    <td align="center"><a href="https://github.com/Alfaxad"><img src="https://github.com/Alfaxad.png" width="100px;" alt=""/><br /><sub><b>Smit</b></sub></a><br /><a href="https://github.com/physiopy/phys2bids/commits?author=viacovella" title="Code">💻</a></td>
 </tr>
 
 
