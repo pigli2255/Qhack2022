@@ -18,7 +18,7 @@ It is a variation of: https://en.wikipedia.org/wiki/Quantum_tic-tac-toe
 
 -[Presentation Slides](https://github.com/pigli2255/Qhack2022/blob/master/Qhack%20Open%20Hackathon%20Project/Quantum%20Tic%20Tac%20Toe.pdf)
 
--[Presentation Slides](https://github.com/pigli2255/Qhack2022/blob/master/Qhack%20Open%20Hackathon%20Project/Quantum%20Tic%20Tac%20Toe.pdf)
+-[Backend Notebook](https://github.com/pigli2255/Qhack2022/blob/master/Qhack%20Open%20Hackathon%20Project/tictactoe-final-for-presentation-with-simulaor.ipynb)
 
 
 [Qhack Open Hackathon Project Folder/Quantum Tic-Tac-Toe](https://github.com/pigli2255/Qhack2022/tree/master/Qhack%20Open%20Hackathon%20Project)
