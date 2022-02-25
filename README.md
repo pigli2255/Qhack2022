@@ -16,7 +16,7 @@ For the **QHACK 2022 OPEN CHALLENGE** we decided to create a unique **Quantum-cl
 
 It is a variation of: https://en.wikipedia.org/wiki/Quantum_tic-tac-toe 
 
-[Presentation Slides](https://docs.google.com/presentation/d/1tBLsqmwnBltVq_fbVn21o7O-7fPXAK1HzJ5LmiDLOyc/edit?usp=sharing)
+[Presentation Slides](https://github.com/pigli2255/Qhack2022/blob/master/Qhack%20Open%20Hackathon%20Project/Quantum%20Tic%20Tac%20Toe.pdf)
 
 
 [Qhack Open Hackathon Project Folder/Quantum Tic-Tac-Toe](https://github.com/pigli2255/Qhack2022/tree/master/Qhack%20Open%20Hackathon%20Project)
