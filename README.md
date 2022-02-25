@@ -14,6 +14,8 @@
 
 For the **QHACK 2022 OPEN CHALLENGE** we decided to create a unique **Quantum-classical tic-tac-toe**.
 
+It is a variation of: https://en.wikipedia.org/wiki/Quantum_tic-tac-toe 
+
 [Presentation Slides](https://docs.google.com/presentation/d/1tBLsqmwnBltVq_fbVn21o7O-7fPXAK1HzJ5LmiDLOyc/edit?usp=sharing)
 
 The game explores superposition properties of qubits as follows:
