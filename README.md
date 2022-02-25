@@ -19,7 +19,7 @@ It is a variation of: https://en.wikipedia.org/wiki/Quantum_tic-tac-toe
 [Presentation Slides](https://docs.google.com/presentation/d/1tBLsqmwnBltVq_fbVn21o7O-7fPXAK1HzJ5LmiDLOyc/edit?usp=sharing)
 
 
-[Qhack Open Hackathon Project Folder](https://github.com/pigli2255/Qhack2022/tree/master/Qhack%20Open%20Hackathon%20Project)
+[Qhack Open Hackathon Project Folder/Quantum Tic-Tac-Toe](https://github.com/pigli2255/Qhack2022/tree/master/Qhack%20Open%20Hackathon%20Project)
 
 The game explores superposition properties of qubits as follows:
 
